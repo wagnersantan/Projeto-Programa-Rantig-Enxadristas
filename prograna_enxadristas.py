@@ -1,4 +1,6 @@
 # Lista para armazenar os dados de cada enxadrista
+
+
 enxadristas = []
 
 while True:
@@ -77,7 +79,8 @@ if enxadristas:
                 break  # Encerra a busca
             if 0 <= busca < len(enxadristas):
                 print(f'--- LEVANTAMENTO DO ENXADRISTA {enxadristas[busca]["nome"]}')
-                print(f'Medalhas: {enxadristas[busca]["medalhas"]}')
+                print(f'Medalhas: Ouro: {enxadristas[busca]["ouro"]}, Prata: {enxadristas[busca]["prata"]}, Bronze: {enxadristas[busca]["bronze"]}')
+                print(f'Partidas jogadas: {len(enxadristas[busca]["medalhas"])}')
                 print('-=' * 30)
             else:
                 print(f'ERRO! Não existe enxadrista com código {busca}.')
