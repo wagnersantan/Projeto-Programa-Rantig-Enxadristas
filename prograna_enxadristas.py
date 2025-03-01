@@ -4,7 +4,7 @@ enxadristas = []
 while True:
     # Dicionário para armazenar os dados de um enxadrista
     enxadrista = {}
-    enxadrista['nome'] = input('Nome do enxadrista: ').strip()
+    enxadrista['nome'] = input('Nome do enxadrista: ').strip().ljust(25)
     
     while True:
         try:
