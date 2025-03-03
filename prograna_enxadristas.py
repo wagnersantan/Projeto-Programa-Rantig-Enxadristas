@@ -1,4 +1,5 @@
-# Lista para armazenar os dados de cada enxadrista
+import pandas as pd
+
 enxadristas = []
 
 while True:
@@ -47,6 +48,16 @@ while True:
     # Adiciona o enxadrista à lista de enxadristas
     enxadristas.append(enxadrista)
 
+    # Adicione as linhas abaixo aqui
+    df = pd.DataFrame(enxadristas)  # Criação do DataFrame
+    df['pontos_por_medalha'] = (df['ouro'] * 3) + (df['prata'] * 2) + (df['bronze'] * 1)
+
+    df['media_pontos_por_partida'] = df['Total'] / tot
+
+
+    # Exibir o DataFrame com os dados
+    print(df[['nome', 'Total', 'ouro', 'prata', 'bronze','pontos_por_medalha','media_pontos_por_partida']])  # Exibição do DataFrame
+
     while True:
         # Pergunta se deseja cadastrar outro enxadrista
         resp = input('Deseja cadastrar outro enxadrista? [S/N] ').strip().upper()
@@ -57,17 +68,17 @@ while True:
     if resp == 'N':
         break  # Encerra o loop de cadastro
 
-# Verifica se há enxadristas cadastrados antes de exibir os dados
+# Verifica se há enxadristas cadastrados antes de exibir os dados finais
 if enxadristas:
     print('-=' * 30)
-    print(f'{"cod":<5}{"Nome":<15}{"Total":<10}{"Ouro":<6}{"Prata":<6}{"Bronze":<6}')
-    print('-=' * 30)
+    print(f'{"Código":<3} {"Nome":<20} {"Total":<5} {"Ouro":<5} {"Prata":<5} {"Bronze":<6}')
+    print('-=' * 70)
 
     # Exibe os dados de cada enxadrista
     for k, v in enumerate(enxadristas):
-        print(f'{k:<5}{v["nome"]:<15}{v["Total"]:<10}{v["ouro"]:<6}{v["prata"]:<6}{v["bronze"]:<6}')
-    
-    print('-=' * 30)
+        print(f'{k:<3} {v["nome"]:<25} {str(v["Total"]):<5} {str(v["ouro"]):<5} {str(v["prata"]):<5} {str(v["bronze"]):<6}')
+
+    print('-=' * 70)
 
     while True:
         try:
@@ -77,21 +88,30 @@ if enxadristas:
                 break  # Encerra a busca
             if 0 <= busca < len(enxadristas):
                 print(f'--- LEVANTAMENTO DO ENXADRISTA {enxadristas[busca]["nome"]}')
-                print(f'Medalhas: {enxadristas[busca]["medalhas"]}')
+                print(f'Medalhas: Ouro: {enxadristas[busca]["ouro"]}, Prata: {enxadristas[busca]["prata"]}, Bronze: {enxadristas[busca]["bronze"]}')
+                print(f'Partidas jogadas: {len(enxadristas[busca]["medalhas"])}')
                 print('-=' * 30)
             else:
                 print(f'ERRO! Não existe enxadrista com código {busca}.')
         except ValueError:
             print("Erro! Digite um número inteiro válido.")
+    
+    def encontrar_campeoes(enxadristas):
+        if not enxadristas:
+            print("A lista de enxadristas está vazia.")
+        return
 
-    # Determina os enxadristas com mais medalhas de cada tipo
     campeao_ouro = max(enxadristas, key=lambda x: x["ouro"])['nome']
     campeao_prata = max(enxadristas, key=lambda x: x["prata"])['nome']
     campeao_bronze = max(enxadristas, key=lambda x: x["bronze"])['nome']
-
-    # Exibe os campeões em cada categoria de medalha
+    campeao_geral = max(enxadristas, key=lambda x: x['Total'])['nome']
+    
+    print(f'O enxadrista com mais pontos totais é: {campeao_geral}')
     print(f'O enxadrista com mais medalhas de ouro é: {campeao_ouro}')
     print(f'O enxadrista com mais medalhas de prata é: {campeao_prata}')
     print(f'O enxadrista com mais medalhas de bronze é: {campeao_bronze}')
 
 print('<< Volte sempre >>')
+
+
+
